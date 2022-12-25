@@ -1,11 +1,10 @@
 from aiogram import Bot, Dispatcher, executor, types
-import config as cfg
 import requests
+import os
 
-API_KEY = cfg.API_KEY
-bot = Bot(token=API_KEY)
+bot = Bot(token=os.getenv('API_KEY'))
 dp = Dispatcher(bot)
-admin = 766712553
+admin = os.getenv('admin')
 
 whitelist = [admin]
 approved = lambda message: message.from_user.id in whitelist
@@ -62,8 +61,8 @@ async def info_for_guests(message: types.Message):
 @dp.message_handler(approved, content_types='text')
 async def search(message: types.Message):
     query = message.text
-    payload = {'query': query}
-    response = requests.get('https://pomahach.com/search/', data=payload)
+    payload = {'gsc.q': query}
+    response = requests.get('https://pomahach.com/search/#gsc.tab=0&gsc.q=Скільки%20є%20видів%20тварин&gsc.sort=')
 
     if response.status_code == 200:
         results = response.json()
