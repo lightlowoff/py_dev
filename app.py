@@ -1,10 +1,13 @@
 from aiogram import Bot, Dispatcher, executor, types
 import requests
 import os
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
 
 bot = Bot(token=os.getenv('API_KEY'))
 dp = Dispatcher(bot)
-admin = os.getenv('admin')
+admin = 766712553
 
 whitelist = [admin]
 approved = lambda message: message.from_user.id in whitelist
