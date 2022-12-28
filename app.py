@@ -63,9 +63,10 @@ async def info_for_guests(message: types.Message):
 
 @dp.message_handler(approved, content_types='text')
 async def search(message: types.Message):
+    url = 'https://pomahach.com/search/'
     query = message.text
-    payload = {'gsc.q': query}
-    response = requests.get('https://pomahach.com/search/#gsc.tab=0&gsc.q=Скільки%20є%20видів%20тварин&gsc.sort=')
+    payload = {'gsc.tab': '0', 'gsc.q': query, 'gsc.sort': ''}
+    response = requests.post(url, data=payload)
 
     if response.status_code == 200:
         results = response.json()
